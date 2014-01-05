@@ -1,0 +1,32 @@
+table
+  td, th
+    padding: 0.5em
+
+form.edit_puzzle, form.new_puzzle, form.edit_announcement, form.new_announcement,
+form.admin
+  +blueprint-form
+  textarea
+    width:  50%
+  label
+    font-weight: normal
+  p.controls
+    a
+      margin-left: 2em
+
+form.edit_puzzle, form.new_puzzle
+  #puzzle_short_description
+    width: 50%
+    height: 50px
+
+form.search
+  input#search
+    font-size: 1em
+    padding: 0.25em
+    margin-right: 0.5em
+    width: 250px
+  input
+    vertical-align: middle
+
+#puzzle-difficulties
+  padding-top: 1em
+  border-top: 5px solid #254980

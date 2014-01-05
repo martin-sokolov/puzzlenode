@@ -1,0 +1,32 @@
+!!! Strict
+%html
+  %head
+    %title
+      = yield(:title).blank? ? controller_name.humanize : yield(:title)
+      \- PuzzleNode
+
+
+    %meta{:name=>"viewport", :content=>"width=1050"}
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application', :debug => Rails.env.development?
+    = csrf_meta_tag
+
+    = yield(:header_bottom)
+
+  %body
+    = render :partial => "shared/flash", :locals => {:flash => flash}
+    = render :partial => "shared/fork_me"
+    %header
+      .wrap
+        #logo
+          %h1= link_to "Puzzle Node", root_path
+          = image_tag "loading.gif", :class => "loading"
+      %nav
+        .wrap= render :partial => "shared/nav"
+      - if current_user.try(:admin)
+        %nav#admin_nav
+          .wrap= render :partial => "shared/admin_nav"
+    #content
+      .wrap= yield
+    #footer
+      = render :partial => "shared/footer"

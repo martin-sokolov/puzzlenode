@@ -1,0 +1,19 @@
+= form_for @announcement, :url => url do |f|
+  %h2= @announcement.title || "New Announcement"
+
+  %p
+    = f.label :title
+    %br
+    = f.text_field :title
+  %p
+    = f.label :author_id
+    %br
+    = f.select :author_id, User.admin.map {|u| [u.name, u.id]}
+  %p
+    = f.text_area :body, 'data-preview' => true
+  %p.controls
+    = f.submit
+    - if @announcement.new_record?
+      = link_to "Cancel", announcements_path
+    - else
+      = link_to "Cancel", announcement_path(@announcement)

@@ -1,0 +1,19 @@
+- if current_user.try(:admin)
+  - content_for :admin_nav do
+    = button_to "New Puzzle", new_admin_puzzle_path, :method => :get
+
+#puzzles
+
+  - @puzzles.each do |puzzle|
+    .puzzle
+      - if puzzle.answered_correctly? current_user
+        = image_tag "solved.png", :class => "solved"
+      - unless puzzle.published?
+        %span.unpublished-label DRAFT
+      = link_to puzzle.name, puzzle_path(puzzle)
+
+      .description
+        .action
+          = render :partial => 'action_button', :locals => { :puzzle => puzzle }
+        = puzzle.short_description
+        .clearfix

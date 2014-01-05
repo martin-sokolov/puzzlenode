@@ -1,0 +1,27 @@
+#leaderboard
+
+  %h1 Leaderboard
+
+  #top_three
+    - @top_three.each_with_index do |(css_class, user), index|
+      - if user
+        %div{:class => "user #{ css_class }"}
+          = render :partial => 'top_three',
+            :locals => { :rank => index + 1, :user => user }
+
+    .clear
+
+  #generic
+    = render :partial => "user", :collection => @users
+
+
+    - if !@local_users.nil?
+      %p
+        &bull; &bull; &bull;
+        %span.local People close to your rank
+      = render :partial => "user", :collection => @local_users
+
+  #about_leaderboard
+
+    This leaderboard is sorted by highest number of correct submissions and
+    earliest creation date of the last correct submission

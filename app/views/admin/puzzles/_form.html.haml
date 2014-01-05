@@ -1,0 +1,70 @@
+- content_for :header_bottom do
+  :javascript
+    $(function(){
+      PuzzleNode.Slugger.watch('puzzle_name', 'puzzle_slug');
+    })
+
+= form_for @puzzle, :url => url do |f|
+  %h2= @puzzle.name || "New Puzzle"
+
+  %p
+    = f.label :name
+    %br
+    = f.text_field :name
+  %p
+    = f.label :slug
+    %br
+    = f.text_field :slug
+  %p
+    = f.label :created_by
+    %br
+    = f.text_field :created_by
+  %p
+    = f.label :created_by_url
+    %br
+    = f.text_field :created_by_url
+  %p
+    = f.label :released_on
+    %br
+    = f.date_select :released_on
+  %p
+    = f.label :published?
+    = f.check_box :published
+  %p
+    = f.label :tag_list, "Tags"
+    %br
+    = f.text_field :tag_list
+  %p
+    = f.label :short_description
+    %br
+    = f.text_area :short_description
+  %p
+    = f.label :description
+    %br
+    = f.text_area :description, 'data-preview' => true
+  %p
+    = f.label :notice
+    %br
+    = f.text_area :notice, 'data-preview' => true
+
+  - if @puzzle.fingerprint
+    %p
+      %b= "Fingerprint: #{@puzzle.fingerprint}"
+  %p
+    = f.label :file, "Solution File"
+    %br
+    = f.file_field :file
+
+  #attachments
+    %h3 Attachments
+    = f.fields_for :attachments do |a|
+      = render "attachment_fields", :f => a
+
+    %p= link_to_add_association "Add an attachment", f, :attachments
+
+  %p.controls
+    = f.submit
+    - if @puzzle.new_record?
+      = link_to "Cancel", puzzles_path
+    - else
+      = link_to "Cancel", puzzle_path(@puzzle)
